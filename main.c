@@ -18,8 +18,11 @@ char* getCSVField(char *line, int num);
 int main(int argc, char **argv){
     FILE *fp;
     char line[256];
-    char *item;
     char *file="index.csv";
+    char *name;
+    char *symbol;
+    int number;
+    float mass;
 
     if (!(fp=fopen(file, "r"))){
         fprintf(stderr, "error unable to read file %s\n", "index.csv");
@@ -32,8 +35,11 @@ int main(int argc, char **argv){
 
     while(fgets(line, 256, fp)){
         char* temp = strdup(line);
-        item=getCSVField(temp, 1);
-        printf("%s\n", item);
+        char* temp2 = strdup(line);
+        name=getCSVField(temp, 1);
+        symbol= getCSVField(temp2, 2);
+        printf("%s\n", name);
+        printf("%s\n", symbol);
         free(temp);
     }
 
