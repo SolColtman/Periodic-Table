@@ -19,9 +19,10 @@ int main(int argc, char **argv){
     FILE *fp;
     char line[256];
     char *item;
+    char *file="index.csv";
 
-    if (!(fp=fopen("index.csv", "r"))){
-        fprintf(stderr, "errorL unable to read file %s\n", "index.csv");
+    if (!(fp=fopen(file, "r"))){
+        fprintf(stderr, "error unable to read file %s\n", "index.csv");
         exit(EXIT_FAILURE);
     }
 
@@ -31,7 +32,7 @@ int main(int argc, char **argv){
 
     while(fgets(line, 256, fp)){
         char* temp = strdup(line);
-        item=getCSVField(temp, 4);
+        item=getCSVField(temp, 1);
         printf("%s\n", item);
         free(temp);
     }
