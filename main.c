@@ -8,7 +8,7 @@
 
 struct element{
     char name[16];
-    char symbol[2];
+    char symbol[3];
     int number;
     float mass;
 };
@@ -45,10 +45,10 @@ int main(){
     loadMass(fp);
     fclose(fp);
 
-    printf("%s\n", e[0].name);
-    printf("%s\n", e[0].symbol);
-    printf("%d\n", e[0].number);
-    printf("%f\n", e[0].mass);
+
+    for (int i=0; i<118; i++){
+        printf("%s %s %d %f\n", e[i].name, e[i].symbol, e[i].number, e[i].mass);
+    }
 
     return 0;
 }
