@@ -19,6 +19,7 @@ void loadSymbols(FILE *fp);
 void loadNumber(FILE *fp);
 void loadMass(FILE *fp);
 FILE* loadFile();
+int displayMenu();
 struct element e[118];
 
 int main(){
@@ -45,10 +46,7 @@ int main(){
     loadMass(fp);
     fclose(fp);
 
-
-    for (int i=0; i<118; i++){
-        printf("%s %s %d %f\n", e[i].name, e[i].symbol, e[i].number, e[i].mass);
-    }
+    displayMenu();
 
     return 0;
 }
@@ -89,7 +87,6 @@ void loadNames(FILE *fp){
     while(fgets(line, 256, fp)){
         char * tmp = strdup(line);
         if (count>0){
-            //printf("Field 1 would be %s\n", getCSVField(tmp, 1));
             strcpy(e[count-1].name, getCSVField(tmp, 1));
         }
         free(tmp);
@@ -105,7 +102,6 @@ void loadSymbols(FILE *fp){
     while(fgets(line, 256, fp)){
         char * tmp = strdup(line);
         if (count>0){
-            //printf("Field 1 would be %s\n", getCSVField(tmp, 1));
             strcpy(e[count-1].symbol, getCSVField(tmp, 2));
         }
         free(tmp);
@@ -139,5 +135,37 @@ void loadMass(FILE *fp){
         }
         free(tmp);
         count++;
+    }
+}
+
+int displayMenu(){
+    int c = 0;
+    int t = 1;
+    int n;
+
+    printf("Atomic Number  Symbol  Name  Mass\n");
+        for (int i=c; i<c+5; i++){
+            printf("%d  %s  %s  %f\n", e[i].number, e[i].symbol, e[i].name, e[i].mass);
+        }
+    printf("\n");
+    printf("    1. Next     2. Back     3. Exit\n");
+
+    while(1){
+        scanf("%d", &n);
+        if (n == 1)
+            c=c+5;
+        else
+            if (n == 2)
+                c=c-5;
+            else
+                if (n == 3)
+                    return 0;
+
+        printf("Atomic Number  Symbol  Name  Mass\n");
+        for (int i=c; i<c+5; i++){
+            printf("%d  %s  %s  %f\n", e[i].number, e[i].symbol, e[i].name, e[i].mass);
+        }
+        printf("\n");
+        printf("    1. Next     2. Back     3. Exit\n");
     }
 }
