@@ -1,6 +1,7 @@
 //
-// Created by SolColtman on 06/08/2022.
+// Created by Sol Coltman on 23/08/2023
 //
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,36 +13,30 @@ struct element{
     float mass;
 };
 
-struct element elements[118];
 char* getCSVField(char *line, int num);
+void loadData(FILE *fp);
+struct element e[118];
 
-int main(int argc, char **argv){
+int main(){
     FILE *fp;
-    char line[256];
     char *file="index.csv";
     char *name;
     char *symbol;
     int number;
     float mass;
+    int check;
 
     if (!(fp=fopen(file, "r"))){
-        fprintf(stderr, "error unable to read file %s\n", "index.csv");
+        fprintf(stderr, "error: unable to open/locate index.csv\n");
         exit(EXIT_FAILURE);
     }
 
-    int check=fgetc(fp);
-    if(check==EOF)
-        exit(EXIT_FAILURE);
+    if (check=fgetc(fp) == EOF)
+        exit(1);
 
-    while(fgets(line, 256, fp)){
-        char* temp = strdup(line);
-        char* temp2 = strdup(line);
-        name=getCSVField(temp, 1);
-        symbol= getCSVField(temp2, 2);
-        printf("%s\n", name);
-        printf("%s\n", symbol);
-        free(temp);
-    }
+    loadData(fp);
+
+    printf("%s\n", e[0].symbol);
 
     return 0;
 }
@@ -58,4 +53,24 @@ char* getCSVField(char *line, int num){
     }
 
     return NULL;
+}
+
+void loadData(FILE *fp){
+    char line[256];
+    int count = 0;
+
+    while(fgets(line, 256, fp)){
+        char * tmp = strdup(line);
+        if (count>0)
+            printf("Field 1 would be %s\n", getCSVField(tmp, 1));
+        free(tmp);
+        count++;
+    }
+
+    strcpy(e[0].name, "Hello");
+    strcpy(e[0].symbol, "Pn");
+    e[0].number = 1;
+    e[0].mass = 1.0;
+
+    fclose(fp);
 }
